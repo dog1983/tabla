@@ -1,91 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  border: 1px solid black;
-  padding: 8px;
-  text-align: center;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Posiciones</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
+    <h1>Tabla de Posiciones</h1>
+    <table>
+        <tr>
+            <th>Posición</th>
+            <th>Equipo</th>
+            <th>Puntos</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Equipo A</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Equipo B</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Equipo C</td>
+            <td>0</td>
+        </tr>
+        <!-- Agrega más filas según sea necesario -->
+    </table>
+    
+    <h2>Registrar Resultados</h2>
+    <form id="resultsForm">
+        <label for="teamSelect">Equipo:</label>
+        <select id="teamSelect">
+            <option value="Equipo A">Equipo A</option>
+            <option value="Equipo B">Equipo B</option>
+            <option value="Equipo C">Equipo C</option>
+            <!-- Agrega más opciones según sea necesario -->
+        </select>
+        <label for="pointsInput">Puntos:</label>
+        <input type="number" id="pointsInput" min="0">
+        <label for="dateInput">Fecha:</label>
+        <input type="date" id="dateInput">
+        <button type="button" id="submitButton">Registrar</button>
+    </form>
 
-<h2>Tabla de Posiciones</h2>
+    <script>
+        const form = document.getElementById('resultsForm');
+        const teamSelect = document.getElementById('teamSelect');
+        const pointsInput = document.getElementById('pointsInput');
+        const dateInput = document.getElementById('dateInput');
+        const submitButton = document.getElementById('submitButton');
+        const table = document.querySelector('table');
 
-<table id="tablaPosiciones">
-  <tr>
-    <th onclick="sortTable(1)">Jugador</th>
-    <th onclick="sortTable(2)">Puntos</th>
-  </tr>
-  <tr>
-    <td>Castiglia</td>
-    <td>14</td>
-  </tr>
-  <tr>
-    <td>Muñe</td>
-    <td>12</td>
-  </tr>
-  <tr>
-    <td>Burro</td>
-    <td>11</td>
-  </tr>
-  <tr>
-    <td>Churra</td>
-    <td>11</td>
-  </tr>
-  <tr>
-    <td>Diego</td>
-    <td>9</td>
-  </tr>
-  <tr>
-    <td>Marcos</td>
-    <td>9</td>
-  </tr>
-  <tr>
-    <td>Alvaro</td>
-    <td>5</td>
-  </tr>
-  <tr>
-    <td>Fede</td>
-    <td>4</td>
-  </tr>
-  <!-- Agrega más filas aquí -->
-</table>
+        const teams = {};
+        
+        function updateTable() {
+            const sortedTeams = Object.keys(teams).sort((a, b) => teams[b].points - teams[a].points);
+            
+            for (let i = 0; i < sortedTeams.length; i++) {
+                const team = teams[sortedTeams[i]];
+                const row = table.rows[i + 1];
+                row.cells[0].textContent = i + 1;
+                row.cells[2].textContent = team.points;
+            }
+        }
 
-<script>
-function sortTable(columnIndex) {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("tablaPosiciones");
-  switching = true;
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < (rows.length - 1); i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("td")[columnIndex];
-      y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-      if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-        shouldSwitch = true;
-        break;
-      }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
-}
-</script>
-
+        submitButton.addEventListener('click', () => {
+            const selectedTeam = teamSelect.value;
+            const points = parseInt(pointsInput.value);
+            
+            if (!teams[selectedTeam]) {
+                teams[selectedTeam] = { points: 0 };
+            }
+            
+            teams[selectedTeam].points += points;
+            
+            updateTable();
+            
+            // Limpiar los campos del formulario
+            pointsInput.value = '';
+            dateInput.value = '';
+        });
+    </script>
 </body>
 </html>
