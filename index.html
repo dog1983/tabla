@@ -1,132 +1,116 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torneo de Padel Dobles</title>
+    <title>Tabla de Posiciones y Fixture</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px;
-        }
-        .table-container {
-            flex: 1;
-            margin-right: 20px;
-        }
-        .fixture-container {
-            flex: 2;
-        }
+        /* Estilo para la tabla de posiciones */
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 50%;
+            margin: 20px;
         }
+
         th, td {
-            border: 1px solid black;
             padding: 8px;
-            text-align: center;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #f2f2f2;
+        }
+
+        /* Estilo para el fixture */
+        #fixture {
+            width: 50%;
+            margin: 20px;
+        }
+
+        #fixture th, #fixture td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
-    <h1>Torneo de Padel Dobles</h1>
-    <div class="container">
-        <div class="table-container">
-            <h2>Tabla de Posiciones</h2>
-            <table>
-                <tr>
-                    <th>Jugador</th>
-                    <th>Sets Gan.</th>
-                    <th>Sets Perd.</th>
-                    <th>Ptos.</th>
-                </tr>
-                <tr>
-                    <td>Castiglia</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Dani</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>Burro</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Churra</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Marcos</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Diego</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Alvaro</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Fede</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <!-- Agrega más filas según sea necesario -->
-            </table>
-        </div>
-        <div class="fixture-container">
-            <h2>Fixture</h2>
-            <table>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Equipo 1</th>
-                    <th>Res 1</th>
-                    <th>Res 2</th>
-                    <th>Equipo 2</th>
-                </tr>
-                <tr>
-                    <td>31/8/23</td>
-                    <td>Castiglia / Churra</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>Marcos / Dani</td>
-                </tr>
-                <tr>
-                    <td>31/8/23</td>
-                    <td>Alvaro / Burro</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>Fede / Diego</td>
-                </tr>
-                <!-- Agrega más filas según sea necesario -->
-            </table>
-        </div>
-    </div>
+    <h1>Tabla de Posiciones</h1>
+    <table id="tablaPosiciones">
+        <thead>
+            <tr>
+                <th>Equipo</th>
+                <th>Puntos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Equipo A</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>Equipo B</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>Equipo C</td>
+                <td>3</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>Fixture</h1>
+    <table id="fixture">
+        <thead>
+            <tr>
+                <th>Partido</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Equipo A vs. Equipo B</td>
+                <td>3-2</td>
+            </tr>
+            <tr>
+                <td>Equipo B vs. Equipo C</td>
+                <td>2-0</td>
+            </tr>
+            <tr>
+                <td>Equipo A vs. Equipo C</td>
+                <td>1-1</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Función para ordenar la tabla de posiciones por puntos
+        function ordenarPorPuntos() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("tablaPosiciones");
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = parseFloat(rows[i].getElementsByTagName("td")[1].textContent);
+                    y = parseFloat(rows[i + 1].getElementsByTagName("td")[1].textContent);
+                    if (x < y) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+
+        // Llamar a la función de ordenar cuando se cargue la página
+        window.onload = ordenarPorPuntos;
+    </script>
 </body>
 </html>
