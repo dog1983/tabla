@@ -6,13 +6,13 @@
             margin: 20px;
         }
 
-        th, td {
+        #table th, td {
             padding: 4px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
 
-        th {
+        #table th {
             background-color: #f2f2f2;
         }
 
