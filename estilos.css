@@ -1,6 +1,6 @@
 * 
         /* Estilo para la tabla de posiciones */
-        table {
+        #table {
             border-collapse: collapse;
             width: 50%;
             margin: 20px;
